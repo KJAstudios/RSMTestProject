@@ -7,6 +7,9 @@ using CardData;
     {
         public static CardDataLoadedEvent cardDataLoaded;
         public static UnityEvent cardAddedToDeck;
+        public static EnergyUsedEvent energyUsed;
+        public static UnityEvent energyReset;
     }
 
     public class CardDataLoadedEvent : UnityEvent<CardList>{}
+    public class EnergyUsedEvent : UnityEvent<int>{}
