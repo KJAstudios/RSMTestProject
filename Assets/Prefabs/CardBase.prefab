@@ -222,7 +222,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5655c072298fc4c4c898ee658fb75f47, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -243,16 +243,16 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8216913325596954191, guid: f320097d153fc814d8116af1eb5feae1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f320097d153fc814d8116af1eb5feae1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.79, y: 5.06}
+  m_Size: {x: 4.55, y: 6}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 1
+  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!61 &5308750585258104628
 BoxCollider2D:
@@ -267,18 +267,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.015343428, y: -0.0076715946}
+  m_Offset: {x: 0.015319824, y: -0.09034181}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.79, y: 5.06}
-    newSize: {x: 3.79, y: 5.06}
+    oldSize: {x: 4.55, y: 6}
+    newSize: {x: 4.55, y: 6}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.8135085, y: 5.0640416}
+  m_Size: {x: 3.5931396, y: 4.898701}
   m_EdgeRadius: 0
 --- !u!114 &4512859361751055191
 MonoBehaviour:
@@ -307,6 +307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd51767d5c1e60e488fd68916ae2c0b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost: 0
   costText: {fileID: 5308750584755199756}
   nameText: {fileID: 5308750584676171887}
   typeText: {fileID: 5308750585428213745}
@@ -341,6 +342,9 @@ MonoBehaviour:
   cardRenderer: {fileID: 5308750585258104629}
   cardImage: {fileID: 5308750585764990136}
   cardCanvas: {fileID: 5308750585901689283}
+  costText: {fileID: 5308750584755199756}
+  glowMaterial: {fileID: 2100000, guid: 5655c072298fc4c4c898ee658fb75f47, type: 2}
+  defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!222 &5308750585258104630
 CanvasRenderer:
   m_ObjectHideFlags: 0

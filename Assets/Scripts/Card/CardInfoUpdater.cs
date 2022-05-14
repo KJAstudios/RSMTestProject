@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class CardInfoUpdater : MonoBehaviour
 {
     // the information for the card, is public for debugging purposes
-    private int cost;
+    public int cost;
     private string cardName;
     private string type;
     private string description;
@@ -32,7 +32,7 @@ public class CardInfoUpdater : MonoBehaviour
     // save the card information into it's relevant field
     private void saveCardInformation(CardInfo cardInfo)
     {
-        cost = cardInfo.cost;
+        this.cost = cardInfo.cost;
         cardName = cardInfo.name;
         type = cardInfo.type;
         description = GenerateDescriptionText(cardInfo.effects);

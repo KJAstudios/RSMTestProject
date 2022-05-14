@@ -1,8 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class CardRendering : MonoBehaviour
 {
@@ -13,7 +13,13 @@ public class CardRendering : MonoBehaviour
     public SpriteRenderer cardImage;
     [Tooltip("Place the canvas for the card image here")]
     public Canvas cardCanvas;
+    [Tooltip("Place the cost text for the card here")]
+    public Text costText;
     
+    [Tooltip("place the glow material here")]
+    public Material glowMaterial;
+    [Tooltip("place the default sprite material here")]
+    public Material defaultMaterial;
 
     //set the sort order for the card so that it doesn't appear on cards in front of it
     public void setSortOrder(int sortOrder)
@@ -45,5 +51,21 @@ public class CardRendering : MonoBehaviour
                 break;
             }
         }
+    }
+
+    // change the card effects depending on if the card can be played or not
+    public void UpdateCardEffects(int energyRemaining, int cardCost)
+    {
+        if (energyRemaining < cardCost)
+        {
+            costText.color = Color.red;
+            cardRenderer.material = defaultMaterial;
+        }
+        else if (energyRemaining >= cardCost)
+        {
+            costText.color = Color.white;
+            cardRenderer.material = glowMaterial;
+        }
+        
     }
 }

@@ -15,8 +15,12 @@ public class EventManager : MonoBehaviour
         GameEvents.cardDataLoaded = new CardDataLoadedEvent();
         GameEvents.cardAddedToDeck = new CardAddedToDeckEvent();
         GameEvents.cardDealt = new CardDealtEvent();
+        GameEvents.cardPlayed = new CardPlayedEvent();
+        GameEvents.cardDiscarded = new CardDiscardedEvent();
+        GameEvents.cardCannotPlay = new CardCannotPlayEvent();
         
         GameEvents.energyUsed = new EnergyUsedEvent();
         GameEvents.energyReset = new UnityEvent();
+        GameEvents.energyRemaining = new EnergyRemainingEvent();
     }
 }

@@ -35,7 +35,7 @@ public class DeckCreator : MonoBehaviour
             curCard.SetCardData(_cardList.cards[cardId]);
             
             // tell the card to move itself to the deck
-            curCard.PutCardBeindDeck();
+            curCard.PutCardBehindDeck();
 
             // show that a card was added to the deck
             GameEvents.cardAddedToDeck.Invoke(curCard);
