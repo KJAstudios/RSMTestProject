@@ -6,6 +6,8 @@ using CardData;
 public static class GameEvents
 {
     public static UnityEvent startTurn;
+    public static UnityEvent endTurn;
+    public static UnityEvent GoToNextTurn;
 
     public static UnityEvent deckGenerated;
     public static DealCardsEvent dealCards;

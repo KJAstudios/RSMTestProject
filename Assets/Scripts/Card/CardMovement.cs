@@ -12,7 +12,6 @@ public class CardMovement : MonoBehaviour
 
     // these check if the card is moving or if its position needs to be adjusted 
     private bool cardNeedsToAdjustInHand;
-
     private bool isMoving;
 
     // check if the card has been dragged and needs to go back to the hand
@@ -95,8 +94,8 @@ public class CardMovement : MonoBehaviour
     private void OnMouseUp()
     {
         // if the card is in the upper half of the screen and middle of the screen, try to play it
-        if (Input.mousePosition.y > Screen.height / 2 &&Input.mousePosition.x > (0 + Screen.width / 4) &&
-                                                          Input.mousePosition.x < (Screen.width - (Screen.width / 4)))
+        if (Input.mousePosition.y > Screen.height / 2 && Input.mousePosition.x > (0 + Screen.width / 4) &&
+            Input.mousePosition.x < (Screen.width - (Screen.width / 4)))
         {
             // play the card
             CardManager card = GetComponent<CardManager>();
@@ -142,6 +141,12 @@ public class CardMovement : MonoBehaviour
         isMoving = true;
         // and that it's been marked as discarded
         isDiscarded = true;
+        // if it's the end of the turn, we just immediately move it to the discard pile
+        if (GameManager.isEndOfTurn)
+        {
+            StartCoroutine(MoveCardToFromHand(UIpositions.discardPosition, Vector3.zero));
+            return;
+        }
         // have it move to the center of the screen instead of back to the hand, and have it not be rotated
         Vector3 centerScreen = new Vector3(0, 0, 0);
         positionToMoveTo = centerScreen;

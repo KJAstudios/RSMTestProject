@@ -8,6 +8,8 @@ public class EventManager : MonoBehaviour
     {
         // create instances of all the different events
         GameEvents.startTurn = new UnityEvent();
+        GameEvents.endTurn = new UnityEvent();
+        GameEvents.GoToNextTurn = new UnityEvent();
         
         GameEvents.deckGenerated = new UnityEvent();
         GameEvents.dealCards = new DealCardsEvent();
