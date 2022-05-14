@@ -1,4 +1,5 @@
 using CardData;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,26 +21,25 @@ public class CardInfoUpdater : MonoBehaviour
     public Text typeText;
     [Tooltip("place the description text for the card here")]
     public Text descriptionText;
-
-    [Tooltip("place the card sprite renderer here")]
-    public SpriteRenderer spriteRenderer;
-
+    
     // function to set the data for this card
-    public void SetCardData(CardInfo cardInfo, int renderOrder)
+    public void SetCardData(CardInfo cardInfo)
+    {
+        saveCardInformation(cardInfo);
+        UpdateCardText();
+    }
+
+    // save the card information into it's relevant field
+    private void saveCardInformation(CardInfo cardInfo)
     {
         cost = cardInfo.cost;
         cardName = cardInfo.name;
         type = cardInfo.type;
         description = GenerateDescriptionText(cardInfo.effects);
-        
-        //TODO move this to a rendering script
-        // we need to set the render order to make sure the card appears over the other cards
-        this.renderOrder = renderOrder;
-        spriteRenderer.sortingOrder = this.renderOrder;
     }
     
     // used to update the text on the card
-    public void UpdateCardText()
+    private void UpdateCardText()
     {
         costText.text = cost.ToString();
         nameText.text = cardName;
@@ -96,4 +96,6 @@ public class CardInfoUpdater : MonoBehaviour
     {
         return "Strengthen " + cardEffect.target + " by " + cardEffect.value + "\n";
     }
+
+    
 }

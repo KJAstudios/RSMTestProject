@@ -7,8 +7,15 @@ public class EventManager : MonoBehaviour
     void Awake()
     {
         // create instances of all the different events
+        GameEvents.startTurn = new UnityEvent();
+        
+        GameEvents.deckGenerated = new UnityEvent();
+        GameEvents.dealCards = new DealCardsEvent();
+        
         GameEvents.cardDataLoaded = new CardDataLoadedEvent();
-        GameEvents.cardAddedToDeck = new UnityEvent();
+        GameEvents.cardAddedToDeck = new CardAddedToDeckEvent();
+        GameEvents.cardDealt = new CardDealtEvent();
+        
         GameEvents.energyUsed = new EnergyUsedEvent();
         GameEvents.energyReset = new UnityEvent();
     }

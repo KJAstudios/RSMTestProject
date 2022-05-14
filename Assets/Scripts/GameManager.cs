@@ -1,18 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    // start listening for important game events
+    private void Awake()
     {
-        
+        GameEvents.deckGenerated.AddListener(StartTurn);
     }
 
-    // Update is called once per frame
-    void Update()
+    // function used to start a turn
+    private void StartTurn()
     {
-        
+        GameEvents.startTurn.Invoke();
     }
 }
