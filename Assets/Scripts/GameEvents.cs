@@ -1,4 +1,5 @@
-﻿using UnityEngine.Events;
+﻿using System.Collections.Generic;
+using UnityEngine.Events;
 using CardData;
 
 /* this class is used for holding the instances and classes of the needed events
@@ -11,10 +12,12 @@ public static class GameEvents
 
     public static UnityEvent deckGenerated;
     public static DealCardsEvent dealCards;
-
+    public static SendDeckToGameEvent sendDeckToDeckStorage;
+    public static UnityEvent deckOutOfCards;
+    public static SendDiscardToDeckEvent sendDiscardToDeck;
+    public static UnityEvent cardMovedToDeck;
 
     public static CardDataLoadedEvent cardDataLoaded;
-    public static CardAddedToDeckEvent cardAddedToDeck;
     public static CardDealtEvent cardDealt;
     public static CardPlayedEvent cardPlayed;
     public static CardDiscardedEvent cardDiscarded;
@@ -44,7 +47,11 @@ public class CardDealtEvent : UnityEvent<CardManager>
 {
 }
 
-public class CardAddedToDeckEvent : UnityEvent<CardManager>
+public class SendDeckToGameEvent : UnityEvent<List<CardManager>>
+{
+}
+
+public class SendDiscardToDeckEvent : UnityEvent<List<CardManager>>
 {
 }
 

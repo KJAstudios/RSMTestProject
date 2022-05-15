@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -22,6 +23,12 @@ public class CardMovement : MonoBehaviour
 
     // the position the card should be at once it's done moving
     private Vector3 positionToMoveTo;
+
+    private void Awake()
+    {
+        // listen for the discard pile to be returned to the deck, so the card will go to the deck
+        GameEvents.sendDiscardToDeck.AddListener(returnCardToDeck);
+    }
 
     private void Update()
     {
@@ -112,6 +119,7 @@ public class CardMovement : MonoBehaviour
         cardTransform.localScale = Vector3.zero;
         cardTransform.position = UIpositions.deckPosition;
     }
+    
 
     // move the card into the hand
     public void MoveToHand(Vector3 offset)
@@ -155,6 +163,15 @@ public class CardMovement : MonoBehaviour
         StartCoroutine(MoveCardToDiscard());
     }
 
+    private void returnCardToDeck(List<CardManager> cardList)
+    {
+        if (cardList.Contains(GetComponent<CardManager>()))
+        {
+            isMoving = true;
+            StartCoroutine(MoveCardToDeck());
+        }
+    }
+
     // the coroutine that handles moving and scaling the card into the hand
     IEnumerator MoveCardToFromHand(Vector3 pointToMoveTo, Vector3 scaleToScaleTo)
     {
@@ -179,5 +196,23 @@ public class CardMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         StartCoroutine(MoveCardToFromHand(UIpositions.discardPosition, Vector3.zero));
+    }
+
+    IEnumerator MoveCardToDeck()
+    {
+        positionToMoveTo = UIpositions.deckPosition;
+        cardTransform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        float elapsedTime = 0;
+        while (elapsedTime < 0.5f)
+        {
+            Vector3 newPosition = Vector3.Lerp(cardTransform.position, UIpositions.deckPosition, (elapsedTime / 0.5f));
+            cardTransform.position = newPosition;
+            elapsedTime += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        cardTransform.position = UIpositions.deckPosition;
+        cardTransform.localScale = Vector3.zero;
+        isMoving = false;
+        GameEvents.cardMovedToDeck.Invoke();
     }
 }

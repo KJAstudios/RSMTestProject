@@ -16,6 +16,7 @@ public class DiscardCounter : MonoBehaviour
         UIpositions.discardPosition = transform.position;
         // listen for when a card is added to the deck, then add one
         GameEvents.cardDiscarded.AddListener(AddCardToDiscard);
+        GameEvents.sendDiscardToDeck.AddListener(EmptyDiscard);
         UpdateCounterText();
     }
 
@@ -27,9 +28,9 @@ public class DiscardCounter : MonoBehaviour
     }
 
     // decrement the counter when a card is returned to the deck
-    private void RemoveCardFromDiscard(CardManager card)
+    private void EmptyDiscard(List<CardManager> cards)
     {
-        cardCount--;
+        cardCount = 0;
         UpdateCounterText();
     }
 

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,14 +12,16 @@ public class DeckCounter : MonoBehaviour
     void Awake()
     {
         // listen for when a card is added to the deck, then add one
-        GameEvents.cardAddedToDeck.AddListener(AddCardToDeck);
+        GameEvents.sendDeckToDeckStorage.AddListener(ReceiveDeck);
         // also listen for when a card is dealt, to lower the counter
         GameEvents.cardDealt.AddListener(RemoveCardFromDeck);
+        // listen for when the discard is returned to the deck
+        GameEvents.sendDiscardToDeck.AddListener(ReceiveDeck);
     }
 
-    private void AddCardToDeck(CardManager card)
+    private void ReceiveDeck(List<CardManager> cardList)
     {
-        cardCount++;
+        cardCount += cardList.Count;
         counterText.text = cardCount.ToString();
     }
 

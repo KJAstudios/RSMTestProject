@@ -13,9 +13,12 @@ public class EventManager : MonoBehaviour
         
         GameEvents.deckGenerated = new UnityEvent();
         GameEvents.dealCards = new DealCardsEvent();
+        GameEvents.deckOutOfCards = new UnityEvent();
+        GameEvents.sendDiscardToDeck = new SendDiscardToDeckEvent();
+        GameEvents.cardMovedToDeck = new UnityEvent();
         
         GameEvents.cardDataLoaded = new CardDataLoadedEvent();
-        GameEvents.cardAddedToDeck = new CardAddedToDeckEvent();
+        GameEvents.sendDeckToDeckStorage = new SendDeckToGameEvent();
         GameEvents.cardDealt = new CardDealtEvent();
         GameEvents.cardPlayed = new CardPlayedEvent();
         GameEvents.cardDiscarded = new CardDiscardedEvent();
