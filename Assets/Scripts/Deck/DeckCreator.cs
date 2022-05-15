@@ -1,9 +1,6 @@
-using System;
 using System.Collections.Generic;
 using CardData;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Random = UnityEngine.Random;
 
 public class DeckCreator : MonoBehaviour
 {
@@ -33,7 +30,7 @@ public class DeckCreator : MonoBehaviour
         GameEvents.cardDataLoaded.AddListener(GenerateDeck);
         
         // tell ui positions where the deck is at
-        UIpositions.deckPosition = transform.position;
+        UIPositions.deckPosition = transform.position;
         
         // and create the list to store the generated deck
         generatedCards = new List<CardManager>();
@@ -76,6 +73,7 @@ public class DeckCreator : MonoBehaviour
         GameEvents.sendDeckToDeckStorage.Invoke(generatedCards);
     }
 
+    // generates a random deck of cards using the deck size settings
     private void GenerateRandomDeck(CardList cardDataList)
     {
         _cardList = cardDataList;
@@ -107,6 +105,7 @@ public class DeckCreator : MonoBehaviour
         return CardIdNames.Fortitude;
     }
 
+    // spawns and sets the data for a card
     private void CreateCard(CardInfo cardData)
     {
         // spawn the cards hidden under the deck

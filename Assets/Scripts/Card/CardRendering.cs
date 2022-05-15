@@ -1,7 +1,5 @@
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class CardRendering : MonoBehaviour
@@ -37,17 +35,17 @@ public class CardRendering : MonoBehaviour
         {
             case 50:
             {
-                cardImage.sprite = (Sprite)AssetDatabase.LoadAssetAtPath("Assets/Images/AttackIcon.png", typeof(Sprite));
+                cardImage.sprite = Resources.Load<Sprite>("Images/AttackIcon");
                 break;
             }
             case 77:
             {
-                cardImage.sprite = (Sprite)AssetDatabase.LoadAssetAtPath("Assets/Images/DefenceIcon.png", typeof(Sprite));
+                cardImage.sprite = Resources.Load<Sprite>("Images/DefenceIcon");
                 break;
             }
             case 18:
             {
-                cardImage.sprite = (Sprite)AssetDatabase.LoadAssetAtPath("Assets/Images/SpellIcon.png", typeof(Sprite));
+                cardImage.sprite = Resources.Load<Sprite>("Images/SpellIcon");
                 break;
             }
         }

@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +5,7 @@ public class EnergyCounter : MonoBehaviour
 {
     public Text energyText;
     public int energyMax = 4;
-    private int energyCount;
+    private int _energyCount;
 
     private void Awake()
     {
@@ -18,16 +15,16 @@ public class EnergyCounter : MonoBehaviour
         GameEvents.cardPlayed.AddListener(TryToPlayCard);
 
         // also set the energy to max at start
-        energyCount = energyMax;
+        _energyCount = energyMax;
         UpdateEnergyText();
     }
 
     private void TryToPlayCard(CardManager card)
     {
         // if the card can be played, use the energy and discard it
-        if (energyCount - card.getEnergyCost() >= 0)
+        if (_energyCount - card.GetEnergyCost() >= 0)
         {
-            UseEnergy(card.getEnergyCost());
+            UseEnergy(card.GetEnergyCost());
             GameEvents.cardDiscarded.Invoke(card);
         }
         // else return it to the hand
@@ -37,23 +34,23 @@ public class EnergyCounter : MonoBehaviour
     private void UseEnergy(int energyUsed)
     {
         // expend the energy
-        energyCount -= energyUsed;
+        _energyCount -= energyUsed;
         UpdateEnergyText();
         // let everything know the remaining energy
-        GameEvents.energyRemaining.Invoke(energyCount);
+        GameEvents.energyRemaining.Invoke(_energyCount);
     }
 
     private void ResetEnergy()
     {
         // reset the energy
-        energyCount = energyMax;
+        _energyCount = energyMax;
         UpdateEnergyText();
         // let everything know the remaining energy
-        GameEvents.energyRemaining.Invoke(energyCount);
+        GameEvents.energyRemaining.Invoke(_energyCount);
     }
 
     private void UpdateEnergyText()
     {
-        energyText.text = energyCount + "/" + energyMax;
+        energyText.text = _energyCount + "/" + energyMax;
     }
 }

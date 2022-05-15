@@ -13,7 +13,7 @@ public class DiscardCounter : MonoBehaviour
     void Awake()
     {
         // tell the game where the discard pile is
-        UIpositions.discardPosition = transform.position;
+        UIPositions.discardPosition = transform.position;
         // listen for when a card is added to the deck, then add one
         GameEvents.cardDiscarded.AddListener(AddCardToDiscard);
         GameEvents.sendDiscardToDeck.AddListener(EmptyDiscard);
@@ -24,6 +24,11 @@ public class DiscardCounter : MonoBehaviour
     private void AddCardToDiscard(CardManager card)
     {
         cardCount++;
+        if (GameManager.isEndOfTurn)
+        {
+            UpdateCounterText();
+            return;
+        }
         StartCoroutine(WaitForUpdate());
     }
 

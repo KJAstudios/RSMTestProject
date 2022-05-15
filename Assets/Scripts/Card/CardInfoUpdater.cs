@@ -1,5 +1,5 @@
+using System;
 using CardData;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,10 +7,9 @@ public class CardInfoUpdater : MonoBehaviour
 {
     // the information for the card, is public for debugging purposes
     public int cost;
-    private string cardName;
-    private string type;
-    private string description;
-    private int renderOrder;
+    private string _cardName;
+    private string _type;
+    private string _description;
 
     // the different text fields, added here to avoid GetChild() and GetComponent() calls
     [Tooltip("place the cost text for the card here")]
@@ -25,26 +24,34 @@ public class CardInfoUpdater : MonoBehaviour
     // function to set the data for this card
     public void SetCardData(CardInfo cardInfo)
     {
-        saveCardInformation(cardInfo);
+        SaveCardInformation(cardInfo);
         UpdateCardText();
     }
 
     // save the card information into it's relevant field
-    private void saveCardInformation(CardInfo cardInfo)
+    private void SaveCardInformation(CardInfo cardInfo)
     {
         this.cost = cardInfo.cost;
-        cardName = cardInfo.name;
-        type = cardInfo.type;
-        description = GenerateDescriptionText(cardInfo.effects);
+        _cardName = cardInfo.name;
+        _type = cardInfo.type;
+        _description = GenerateDescriptionText(cardInfo.effects);
     }
     
     // used to update the text on the card
     private void UpdateCardText()
     {
         costText.text = cost.ToString();
-        nameText.text = cardName;
-        typeText.text = type;
-        descriptionText.text = description;
+        nameText.text = CapitalizeName(_cardName);
+        typeText.text = _type;
+        descriptionText.text = _description;
+    }
+
+    // capitalizes the first letter of the name of the card
+    private string CapitalizeName(string nameString)
+    {
+        string nameStr = nameString;
+        nameStr = Char.ToUpper(nameStr[0]) + nameStr.Substring(1);
+        return nameStr;
     }
 
     // generates the description text for the card

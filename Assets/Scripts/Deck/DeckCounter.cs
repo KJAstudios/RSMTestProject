@@ -19,12 +19,14 @@ public class DeckCounter : MonoBehaviour
         GameEvents.sendDiscardToDeck.AddListener(ReceiveDeck);
     }
 
+    // adds cards to the count in the deck when it receives them
     private void ReceiveDeck(List<CardManager> cardList)
     {
         cardCount += cardList.Count;
         counterText.text = cardCount.ToString();
     }
 
+    // removes a card from the count when it's dealt
     private void RemoveCardFromDeck(CardManager card)
     {
         cardCount--;

@@ -64,9 +64,14 @@ public class CardManager : MonoBehaviour
     }
     
     // get the energy cost of the card
-    public int getEnergyCost()
+    public int GetEnergyCost()
     {
         return cardInfo.cost;
+    }
+
+    public void SetAsRightMostCard(bool isRightCard)
+    {
+        cardMovement.isRightMostCard = isRightCard;
     }
 
     // load the image for the card
@@ -87,6 +92,6 @@ public class CardManager : MonoBehaviour
     // update the effects of the card depending on if it can be played or not
     private void UpdateCardEffects(int remainingEnergy)
     {
-        cardRendering.UpdateCardEffects(remainingEnergy, getEnergyCost());
+        cardRendering.UpdateCardEffects(remainingEnergy, GetEnergyCost());
     }
 }

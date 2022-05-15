@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using CardData;
 using UnityEngine;
 
 public class DeckStorage : MonoBehaviour
@@ -37,12 +36,12 @@ public class DeckStorage : MonoBehaviour
         for (int i = 0; i < cardList.Count; i++)
         {
             // pick a random place in the card list
-            int randomPlace = Random.Range(0, cardList.Count - 1);
+            int randomPlace = Random.Range(i, cardList.Count - 1);
             
-            // and swap that card with the card at the beginning of the list
+            // and swap that card with the card at the current index
             CardManager tempCard = cardList[randomPlace];
-            cardList[randomPlace] = cardList[0];
-            cardList[0] = tempCard;
+            cardList[randomPlace] = cardList[i];
+            cardList[i] = tempCard;
         }
     }
     
@@ -88,5 +87,6 @@ public class DeckStorage : MonoBehaviour
             cardsPhysicallyHere--;
             yield return new WaitForSeconds(timeBetweenDeals);
         }
+        GameEvents.cardsAreDoneBeingDealt.Invoke();
     }
 }

@@ -14,15 +14,15 @@ public class HandManager : MonoBehaviour
     [Tooltip("the maximum width the hand can possibly be")]
     public float maxHandWidth = 170f;
 
-    [Tooltip("the gameobject for the bottom of the cards to point to")]
+    [Tooltip("the GameObject for the bottom of the cards to point to")]
     public GameObject handLookAtPoint;
 
-    private int cardsInHand;
-    private List<CardManager> cardList;
+    private int _cardsInHand;
+    private List<CardManager> _cardList;
 
     private void Awake()
     {
-        cardList = new List<CardManager>();
+        _cardList = new List<CardManager>();
 
         // listen for important events
         GameEvents.startTurn.AddListener(DealCardsToHand);
@@ -31,23 +31,23 @@ public class HandManager : MonoBehaviour
         GameEvents.endTurn.AddListener(DiscardHand);
 
         // tell UI positions where the hand is
-        UIpositions.handPosition = transform.position;
-        UIpositions.handLookAtPointPosition = handLookAtPoint.transform.position;
+        UIPositions.handPosition = transform.position;
+        UIPositions.handLookAtPointPosition = handLookAtPoint.transform.position;
     }
 
     // when a turn starts, deal cards to the hand
     private void DealCardsToHand()
     {
-        int cardsToDeal = maxHandSize - cardsInHand;
+        int cardsToDeal = maxHandSize - _cardsInHand;
         GameEvents.dealCards.Invoke(cardsToDeal);
     }
 
     // when a turn ends, empty the hand
     private void DiscardHand()
     {
-        while (cardList.Count > 0)
+        while (_cardList.Count > 0)
         {
-            CardManager card = cardList[0];
+            CardManager card = _cardList[0];
             GameEvents.cardDiscarded.Invoke(card);
         }
 
@@ -57,8 +57,8 @@ public class HandManager : MonoBehaviour
     // when a card is discarded, remove it from the hand, and readjust the cards
     private void CardDiscarded(CardManager card)
     {
-        cardList.Remove(card);
-        cardsInHand--;
+        _cardList.Remove(card);
+        _cardsInHand--;
         AdjustCardsInHand(GetCardOffsets());
     }
 
@@ -66,8 +66,8 @@ public class HandManager : MonoBehaviour
     private void AddCardToHand(CardManager card)
     {
         // add the card to the list and counter
-        cardList.Insert(0, card);
-        cardsInHand++;
+        _cardList.Insert(0, card);
+        _cardsInHand++;
 
         List<Vector3> cardOffsets = GetCardOffsets();
         // move the incoming card to the hand
@@ -81,10 +81,18 @@ public class HandManager : MonoBehaviour
         // we need to set the sort order so that the cards don't merge together
         int sortOrder = 0;
         // then adjust the angle of the cards, and their sort order
-        for (int i = 0; i < cardList.Count; i++)
+        for (int i = 0; i < _cardList.Count; i++)
         {
-            cardList[i].AdjustPositionInHandTo(cardOffsets[i]);
-            cardList[i].SetSortOrder(sortOrder);
+            CardManager curCard = _cardList[i];
+            curCard.AdjustPositionInHandTo(cardOffsets[i]);
+            curCard.SetSortOrder(sortOrder);
+            // the right most card needs to be set as such
+            curCard.SetAsRightMostCard(false);
+            if (i == _cardList.Count - 1)
+            {
+                curCard.SetAsRightMostCard(true);
+            }
+
             sortOrder += 3;
         }
     }
@@ -92,26 +100,26 @@ public class HandManager : MonoBehaviour
     // this is to get the offset for each card in the hand relative to the location of the hand
     private List<Vector3> GetCardOffsets()
     {
-        float xOffset = maxHandWidth / cardsInHand;
+        float xOffset = maxHandWidth / _cardsInHand;
         if (xOffset > maxDistanceBetweenCards)
         {
             xOffset = maxDistanceBetweenCards;
         }
 
         // this calculates the x distance between the cards
-        float currentCardPosition = UIpositions.handPosition.x - ((xOffset * cardsInHand) / 2);
+        float currentCardPosition = UIPositions.handPosition.x - ((xOffset * _cardsInHand) / 2);
 
         // these are to calculate the arc for the cards
         float angle = 90f;
         float radius = 0.1f;
-        float increment = 180f / cardsInHand;
+        float increment = 180f / _cardsInHand;
 
         // and this is used so that the cards have different z offsets to aid in mouse over detection
-        float zOffset = 0.01f;
+        const float zOffset = 0.01f;
         float curZ = 0;
 
         List<Vector3> returnList = new List<Vector3>();
-        for (int i = 0; i < cardsInHand; i++)
+        for (int i = 0; i < _cardsInHand; i++)
         {
             float verticalPosition = (float)Math.Cos(angle) * radius;
             Vector3 curOffset = new Vector3(currentCardPosition, verticalPosition, curZ);
@@ -124,9 +132,9 @@ public class HandManager : MonoBehaviour
         return returnList;
     }
 
-    IEnumerator WaitToStartNextTurn()
+    private IEnumerator WaitToStartNextTurn()
     {
-        yield return new WaitForSeconds(2);
-        GameEvents.GoToNextTurn.Invoke();
+        yield return new WaitForSeconds(GameManager.timeBetweenTurnsRef);
+        GameEvents.goToNextTurn.Invoke();
     }
 }

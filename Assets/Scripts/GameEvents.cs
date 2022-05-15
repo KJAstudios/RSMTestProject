@@ -8,10 +8,11 @@ public static class GameEvents
 {
     public static UnityEvent startTurn;
     public static UnityEvent endTurn;
-    public static UnityEvent GoToNextTurn;
-
+    public static UnityEvent goToNextTurn;
+    
     public static UnityEvent deckGenerated;
     public static DealCardsEvent dealCards;
+    public static UnityEvent cardsAreDoneBeingDealt;
     public static SendDeckToGameEvent sendDeckToDeckStorage;
     public static UnityEvent deckOutOfCards;
     public static SendDiscardToDeckEvent sendDiscardToDeck;
@@ -22,6 +23,8 @@ public static class GameEvents
     public static CardPlayedEvent cardPlayed;
     public static CardDiscardedEvent cardDiscarded;
     public static CardCannotPlayEvent cardCannotPlay;
+    public static UnityEvent cardBeingPlayed;
+    public static UnityEvent cardDoneBeingPlayed;
 
     #region energyEvents
 
